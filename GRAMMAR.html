@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="generator" content="ebnf2railroad" />
+  <title>JC Grammar</title>
+  <style type="text/css">
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+:root {
+    --subtleText: #777;
+    --highlightText: hotpink;
+    --itemHeadingBackground: #eee;
+    --background: white;
+    --borderColor: #ccc;
+    --textColor: #111;
+
+    --diagramBackground: #f8f8f8;
+    --diagramLines: black;
+    --diagramText: black;
+    --terminalLines: black;
+    --terminalFill: #feffdf;
+    --nonTerminalLines: black;
+    --nonTerminalFill: #feffdf;
+    --specialSequenceLines: black;
+    --specialSequenceFill: #ffe79a;
+
+    --ebnfCodeBackground: #e8e8e8;
+    --ebnfIdentifier: #ef5a5a;
+    --ebnfTerminal: #ffa952;
+    --ebnfBaseColor: #777;
+}
+
+.theme-dark {
+    --subtleText: #777;
+    --highlightText: hotpink;
+    --itemHeadingBackground: #444;
+    --background: #333;
+    --borderColor: lightblue;
+    --textColor: #ddd;
+
+    --diagramBackground: #222;
+    --diagramLines: #3e432e;
+    --diagramText: #a7d129;
+    --terminalLines: #a7d129;
+    --terminalFill: #3e432e;
+    --nonTerminalLines: #a7d129;
+    --nonTerminalFill: #3e432e;
+    --specialSequenceLines: #a7d129;
+    --specialSequenceFill: #444;
+
+    --ebnfCodeBackground: #3e432e;
+    --ebnfIdentifier: lightblue;
+    --ebnfTerminal: #a7d129;
+    --ebnfBaseColor: #ddd;
+}
+
+html {
+    font-family: sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--textColor);
+}
+
+a {
+    color: inherit;
+}
+
+a:visited {
+    color: var(--subtleText);
+}
+
+a:active, a:focus, a:hover {
+    color: var(--highlightText);
+}
+
+header {
+    border-bottom: 1px solid var(--borderColor);
+    padding: 1rem;
+}
+
+header button {
+  display: none;
+}
+
+main {
+    overflow: hidden;
+    margin-left: 300px;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    padding: 1rem 2rem 1rem 1rem;
+    z-index: 5;
+    background: var(--background);
+    width: 300px;
+    float: left;
+    overflow: auto;
+}
+
+nav h3 {
+    white-space: nowrap;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav a {
+    display: inline-block;
+    color: var(--subtleText);
+    text-decoration: none;
+    padding: 0.33rem 0;
+}
+
+article {
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem 2rem;
+    border-left: 1px solid var(--borderColor);
+}
+
+article + footer {
+    padding: 1rem 2rem;
+    border-left: 1px solid var(--borderColor);
+    background: var(--itemHeadingBackground);
+}
+
+code {
+    width: 100%;
+}
+
+pre {
+    overflow: auto;
+}
+
+pre > code {
+    display: block;
+    padding: 1em;
+    background: var(--diagramBackground);
+}
+
+h4 {
+    padding: 2rem;
+    margin: 4rem -2rem 1rem -2rem;
+    background: var(--itemHeadingBackground);
+    font-size: 125%;
+}
+
+blockquote {
+    margin-left: 0;
+    margin-top: calc(1em - 1px);
+    margin-bottom: calc(1em - 1px);
+    padding: 1px 0 1px 1rem;
+    border-left: 1rem solid var(--ebnfCodeBackground);
+}
+
+dfn {
+    font-style: normal;
+    cursor: default;
+}
+
+.diagram-container {
+    background: var(--diagramBackground);
+    margin-bottom: 0.25rem;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+}
+
+/* Responsiveness */
+@media (max-width: 800px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 0.5rem 1rem;
+    display: flex;
+  }
+
+  header h1 {
+    margin: 0 auto 0 0;
+    display: flex;
+    align-items: center;
+  }
+
+  header button {
+    display: initial;
+    position: relative;
+    z-index: 10;
+  }
+
+  header button::after {
+    content: '☰';
+    margin-left: auto;
+    font-size: 1.5rem;
+  }
+
+  main {
+    display: block;
+    position: relative;
+    margin-left: 0;
+  }
+
+  nav {
+    height: auto;
+    display: block;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(300px);
+    padding-top: 3rem;
+    background: var(--background);
+    box-shadow: 0 0 0 1000000rem rgba(0, 0, 0, 0.35);
+  }
+
+  .menu-open nav {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  nav a {
+    padding: 0.66rem 0;
+  }
+
+  article {
+    margin-left: 0;
+    border-left: 0;
+    padding: 1rem;
+  }
+  article + footer {
+    padding: 1rem;
+    border-left: 0;
+  }
+}
+
+/* EBNF text representation styling */
+code.ebnf {
+  padding: 1em;
+  background: var(--ebnfCodeBackground);
+  font-weight: bold;
+  color: var(--ebnfBaseColor);
+  white-space: pre-wrap;
+  display: inline-block;
+  width: 100%;
+}
+.ebnf-identifier {
+  color: var(--ebnfIdentifier);
+}
+.ebnf-terminal {
+  color: var(--ebnfTerminal);
+}
+.ebnf-non-terminal {
+  font-weight: normal;
+}
+.ebnf-comment {
+  font-weight: normal;
+  font-style: italic;
+  color: #999;
+}
+
+/* EBNF diagram representation styling */
+svg.railroad-diagram {
+  width: 100%;
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: var(--diagramLines);
+  fill: rgba(0,0,0,0);
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  fill: var(--diagramText);
+}
+svg.railroad-diagram text.diagram-text {
+  font-size: 12px;
+}
+svg.railroad-diagram text.diagram-arrow {
+  font-size: 16px;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram g.non-terminal text {
+  /*font-style: italic;*/
+}
+svg.railroad-diagram g.special-sequence rect {
+  fill: var(--specialSequenceFill);
+  stroke: var(--specialSequenceLines);
+}
+svg.railroad-diagram g.special-sequence text {
+  font-style: italic;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+}
+svg.railroad-diagram rect.group-box {
+  stroke: gray;
+  stroke-dasharray: 10 5;
+  fill: none;
+}
+svg.railroad-diagram g.non-terminal rect {
+  fill: var(--nonTerminalFill);
+  stroke: var(--nonTerminalLines);
+}
+svg.railroad-diagram g.terminal rect {
+  fill: var(--terminalFill);
+  stroke: var(--terminalLines);
+}
+svg.railroad-diagram path.diagram-text {
+  stroke-width: 3;
+  stroke: black;
+  fill: white;
+  cursor: help;
+}
+svg.railroad-diagram g.diagram-text:hover path.diagram-text {
+  fill: #eee;
+}
+</style>
+</head>
+<body>
+
+  <script type="text/javascript">
+    const htmlTag = document.getElementsByTagName("html")[0];
+    const options = (document.location.search || "")
+      .slice(1)
+      .split("&")
+      .map(kv => kv.split("="))
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+    if (options["theme"]) {
+      htmlTag.classList.add("theme-" + options["theme"]);
+    }
+  </script>
+  <header>
+    <h1>JC Grammar</h1>
+    <button type="button"></button>
+  </header>
+  <nav>
+    
+    <h3>Root element:</h3>
+    <ul class="nav-alphabetical">
+    <li class="root-node"><a href="#statement">statement</a>
+        
+        
+      </li>
+    </ul>
+    
+    
+    <h3>Quick navigation:</h3>
+    <ul class="nav-alphabetical">
+    <li><a href="#e_sum">e_sum</a>
+        
+        
+      </li><li><a href="#expression">expression</a>
+        
+        
+      </li><li><a href="#l_number">l_number</a>
+        
+        
+      </li><li><a href="#l_string">l_string</a>
+        
+        
+      </li><li><a href="#literal">literal</a>
+        
+        
+      </li><li><a href="#value">value</a>
+        
+        
+      </li>
+    </ul>
+    
+    
+    
+    <h3>Character sets:</h3>
+    <ul class="nav-alphabetical">
+    <li><a href="#digit">digit</a>
+        
+        
+      </li>
+    </ul>
+    
+  </nav>
+  <main>
+  <article>
+    <section>
+  <h4 id="statement">statement</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="520.5" style="max-height: 337px;" viewBox="0 0 520.5 337"><g transform="translate(.5 .5)"><g><path d="M20 179v20m0 -10h20"></path></g><path d="M40 189h10"></path><g><path d="M50 189h0"></path><path d="M470.5 189h0"></path><rect x="50" y="42" width="420.5" height="275" rx="10" ry="10" class="group-box"></rect><g><path d="M50 189h10"></path><path d="M460.5 189h10"></path><rect x="60" y="72" width="400.5" height="237" rx="10" ry="10" class="group-box"></rect><g><path d="M60 189h10"></path><path d="M450.5 189h10"></path><rect x="70" y="102" width="380.5" height="199" rx="10" ry="10" class="group-box"></rect><g><path d="M70 189h10"></path><path d="M440.5 189h10"></path><rect x="80" y="132" width="360.5" height="161" rx="10" ry="10" class="group-box"></rect><g><path d="M80 189h0"></path><path d="M440.5 189h0"></path><path d="M80 189h20"></path><g><path d="M100 189h99"></path><path d="M321.5 189h99"></path><rect x="199" y="162" width="122.5" height="55" rx="10" ry="10" class="group-box"></rect><g><path d="M199 189h0"></path><path d="M321.5 189h0"></path><path d="M199 189a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path><g><path d="M219 169h82.5"></path></g><path d="M301.5 169a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path><path d="M199 189h20"></path><g><path d="M219 189h0"></path><path d="M301.5 189h0"></path><path d="M219 189h10"></path><g class="non-terminal"><path d="M229 189h0"></path><path d="M291.5 189h0"></path><rect x="229" y="178" width="62.5" height="22"></rect><a xlink:href="#digit"><text x="260.25" y="193">digit</text></a></g><path d="M291.5 189h10"></path><path d="M229 189a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path><g><path d="M229 209h62.5"></path></g><path d="M291.5 209a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path></g><path d="M301.5 189h20"></path></g><g><path d="M199 151h0"></path><path d="M265 151h0"></path><a xlink:href="#l_number"><text x="232" y="156" class="comment">l&#95;number</text></a></g></g><path d="M420.5 189h20"></path><path d="M80 189a10 10 0 0 1 10 10v57a10 10 0 0 0 10 10"></path><g><path d="M100 266h0"></path><path d="M420.5 266h0"></path><rect x="100" y="247" width="320.5" height="38" rx="10" ry="10" class="group-box"></rect><g class="terminal"><path d="M100 266h10"></path><path d="M410.5 266h10"></path><rect x="110" y="255" width="300.5" height="22" rx="10" ry="10"></rect><text x="260.25" y="270">NO WAY TO EXPRESS A RANGE LETS GO</text></g><g><path d="M100 236h0"></path><path d="M166 236h0"></path><a xlink:href="#l_string"><text x="133" y="241" class="comment">l&#95;string</text></a></g></g><path d="M420.5 266a10 10 0 0 0 10 -10v-57a10 10 0 0 1 10 -10"></path></g><g><path d="M80 121h0"></path><path d="M139 121h0"></path><a xlink:href="#literal"><text x="109.5" y="126" class="comment">literal</text></a></g></g><g><path d="M70 91h0"></path><path d="M115 91h0"></path><a xlink:href="#value"><text x="92.5" y="96" class="comment">value</text></a></g></g><g><path d="M60 61h0"></path><path d="M105 61h0"></path><a xlink:href="#e_sum"><text x="82.5" y="66" class="comment">e&#95;sum</text></a></g></g><g><path d="M50 31h0"></path><path d="M130 31h0"></path><a xlink:href="#expression"><text x="90" y="36" class="comment">expression</text></a></g></g><path d="M470.5 189h10"></path><path d="M 480.5 189 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">statement</span> = <a class="ebnf-non-terminal" href="#expression">expression</a> <span class="ebnf-end">;</span></code>
+  <p><strong>statement</strong> is referencing:<p>
+<ul>
+<li><a href="#expression">expression</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="expression">expression</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="162.5" style="max-height: 62px;" viewBox="0 0 162.5 62"><g transform="translate(.5 .5)"><g><path d="M20 21v20m0 -10h20"></path></g><path d="M40 31h10"></path><g class="non-terminal"><path d="M50 31h0"></path><path d="M112.5 31h0"></path><rect x="50" y="20" width="62.5" height="22"></rect><a xlink:href="#e_sum"><text x="81.25" y="35">e&#95;sum</text></a></g><path d="M112.5 31h10"></path><path d="M 122.5 31 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">expression</span> = <a class="ebnf-non-terminal" href="#e_sum">e_sum</a> <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>expression</strong>:<p>
+<ul>
+<li><a href="#statement">statement</a></li>
+</ul>
+  <p><strong>expression</strong> is referencing:<p>
+<ul>
+<li><a href="#e_sum">e_sum</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="e_sum">e_sum</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="162.5" style="max-height: 62px;" viewBox="0 0 162.5 62"><g transform="translate(.5 .5)"><g><path d="M20 21v20m0 -10h20"></path></g><path d="M40 31h10"></path><g class="non-terminal"><path d="M50 31h0"></path><path d="M112.5 31h0"></path><rect x="50" y="20" width="62.5" height="22"></rect><a xlink:href="#value"><text x="81.25" y="35">value</text></a></g><path d="M112.5 31h10"></path><path d="M 122.5 31 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">e_sum</span> = <a class="ebnf-non-terminal" href="#value">value</a> <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>e_sum</strong>:<p>
+<ul>
+<li><a href="#expression">expression</a></li>
+</ul>
+  <p><strong>e_sum</strong> is referencing:<p>
+<ul>
+<li><a href="#value">value</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="value">value</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="179.5" style="max-height: 62px;" viewBox="0 0 179.5 62"><g transform="translate(.5 .5)"><g><path d="M20 21v20m0 -10h20"></path></g><path d="M40 31h10"></path><g class="non-terminal"><path d="M50 31h0"></path><path d="M129.5 31h0"></path><rect x="50" y="20" width="79.5" height="22"></rect><a xlink:href="#literal"><text x="89.75" y="35">literal</text></a></g><path d="M129.5 31h10"></path><path d="M 139.5 31 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">value</span> = <a class="ebnf-non-terminal" href="#literal">literal</a> <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>value</strong>:<p>
+<ul>
+<li><a href="#e_sum">e_sum</a></li>
+</ul>
+  <p><strong>value</strong> is referencing:<p>
+<ul>
+<li><a href="#literal">literal</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="literal">literal</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="208" style="max-height: 92px;" viewBox="0 0 208 92"><g transform="translate(.5 .5)"><g><path d="M20 21v20m0 -10h20"></path></g><g><path d="M40 31h0"></path><path d="M168 31h0"></path><path d="M40 31h20"></path><g class="non-terminal"><path d="M60 31h0"></path><path d="M148 31h0"></path><rect x="60" y="20" width="88" height="22"></rect><a xlink:href="#l_number"><text x="104" y="35">l&#95;number</text></a></g><path d="M148 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g class="non-terminal"><path d="M60 61h0"></path><path d="M148 61h0"></path><rect x="60" y="50" width="88" height="22"></rect><a xlink:href="#l_string"><text x="104" y="65">l&#95;string</text></a></g><path d="M148 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M 168 31 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">literal</span> = <a class="ebnf-non-terminal" href="#l_number">l_number</a> | <a class="ebnf-non-terminal" href="#l_string">l_string</a> <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>literal</strong>:<p>
+<ul>
+<li><a href="#value">value</a></li>
+</ul>
+  <p><strong>literal</strong> is referencing:<p>
+<ul>
+<li><a href="#l_number">l_number</a></li><li><a href="#l_string">l_string</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="l_string">l_string</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="400.5" style="max-height: 62px;" viewBox="0 0 400.5 62"><g transform="translate(.5 .5)"><g><path d="M20 21v20m10 -20v20m-10 -10h20"></path></g><path d="M40 31h10"></path><g class="terminal"><path d="M50 31h0"></path><path d="M350.5 31h0"></path><rect x="50" y="20" width="300.5" height="22" rx="10" ry="10"></rect><text x="200.25" y="35">NO WAY TO EXPRESS A RANGE LETS GO</text></g><path d="M350.5 31h10"></path><path d="M 360.5 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">l_string</span> = <span class="ebnf-terminal">"NO WAY TO EXPRESS A RANGE LETS GO"</span> <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>l_string</strong>:<p>
+<ul>
+<li><a href="#literal">literal</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="l_number">l_number</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="202.5" style="max-height: 79px;" viewBox="0 0 202.5 79"><g transform="translate(.5 .5)"><g><path d="M20 29v20m0 -10h20"></path></g><g><path d="M40 39h0"></path><path d="M162.5 39h0"></path><path d="M40 39a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path><g><path d="M60 19h82.5"></path></g><path d="M142.5 19a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path><path d="M40 39h20"></path><g><path d="M60 39h0"></path><path d="M142.5 39h0"></path><path d="M60 39h10"></path><g class="non-terminal"><path d="M70 39h0"></path><path d="M132.5 39h0"></path><rect x="70" y="28" width="62.5" height="22"></rect><a xlink:href="#digit"><text x="101.25" y="43">digit</text></a></g><path d="M132.5 39h10"></path><path d="M70 39a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path><g><path d="M70 59h62.5"></path></g><path d="M132.5 59a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path></g><path d="M142.5 39h20"></path></g><path d="M 162.5 39 h 20 m 0 -10 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">l_number</span> = { <a class="ebnf-non-terminal" href="#digit">digit</a> } <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>l_number</strong>:<p>
+<ul>
+<li><a href="#literal">literal</a></li>
+</ul>
+  <p><strong>l_number</strong> is referencing:<p>
+<ul>
+<li><a href="#digit">digit</a></li>
+</ul>
+</section>
+<section>
+  <h4 id="digit">digit</h4>
+  <div class="diagram-container"><svg class="railroad-diagram" width="148.5" style="max-height: 332px;" viewBox="0 0 148.5 332"><g transform="translate(.5 .5)"><g><path d="M20 21v20m10 -20v20m-10 -10h20"></path></g><g><path d="M40 31h0"></path><path d="M108.5 31h0"></path><path d="M40 31h20"></path><g class="terminal"><path d="M60 31h0"></path><path d="M88.5 31h0"></path><rect x="60" y="20" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="35">0</text></g><path d="M88.5 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 61h0"></path><path d="M88.5 61h0"></path><rect x="60" y="50" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="65">1</text></g><path d="M88.5 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v40a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 91h0"></path><path d="M88.5 91h0"></path><rect x="60" y="80" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="95">2</text></g><path d="M88.5 91a10 10 0 0 0 10 -10v-40a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v70a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 121h0"></path><path d="M88.5 121h0"></path><rect x="60" y="110" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="125">3</text></g><path d="M88.5 121a10 10 0 0 0 10 -10v-70a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v100a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 151h0"></path><path d="M88.5 151h0"></path><rect x="60" y="140" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="155">4</text></g><path d="M88.5 151a10 10 0 0 0 10 -10v-100a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v130a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 181h0"></path><path d="M88.5 181h0"></path><rect x="60" y="170" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="185">5</text></g><path d="M88.5 181a10 10 0 0 0 10 -10v-130a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v160a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 211h0"></path><path d="M88.5 211h0"></path><rect x="60" y="200" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="215">6</text></g><path d="M88.5 211a10 10 0 0 0 10 -10v-160a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v190a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 241h0"></path><path d="M88.5 241h0"></path><rect x="60" y="230" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="245">7</text></g><path d="M88.5 241a10 10 0 0 0 10 -10v-190a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v220a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 271h0"></path><path d="M88.5 271h0"></path><rect x="60" y="260" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="275">8</text></g><path d="M88.5 271a10 10 0 0 0 10 -10v-220a10 10 0 0 1 10 -10"></path><path d="M40 31a10 10 0 0 1 10 10v250a10 10 0 0 0 10 10"></path><g class="terminal"><path d="M60 301h0"></path><path d="M88.5 301h0"></path><rect x="60" y="290" width="28.5" height="22" rx="10" ry="10"></rect><text x="74.25" y="305">9</text></g><path d="M88.5 301a10 10 0 0 0 10 -10v-250a10 10 0 0 1 10 -10"></path></g><path d="M 108.5 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg>
+</div>
+  <code class="ebnf"><span class="ebnf-identifier">digit</span>
+  = <span class="ebnf-terminal">"0"</span> | <span class="ebnf-terminal">"1"</span> | <span class="ebnf-terminal">"2"</span> | <span class="ebnf-terminal">"3"</span> | <span class="ebnf-terminal">"4"</span> | <span class="ebnf-terminal">"5"</span> | <span class="ebnf-terminal">"6"</span>
+  | <span class="ebnf-terminal">"7"</span> | <span class="ebnf-terminal">"8"</span> | <span class="ebnf-terminal">"9"</span>
+  <span class="ebnf-end">;</span></code>
+  <p>Items referencing <strong>digit</strong>:<p>
+<ul>
+<li><a href="#l_number">l_number</a></li>
+</ul>
+</section>
+
+  </article>
+  <footer>
+    <p>Date: 2024-07-10T23:14 - <a href="?theme=dark" data-theme="dark">Dark</a> - <a href="?theme=light" data-theme="light">Light</a></p>
+  </footer>
+  </main>
+  <script type="text/javascript">
+    document.querySelector("header button").addEventListener("click", function() {
+      document.getElementsByTagName("html")[0].classList.toggle("menu-open");
+    });
+    document.querySelector("nav").addEventListener("click", function(event) {
+      if (event.target.tagName !== "A") return;
+      htmlTag.classList.remove("menu-open");
+    });
+    document.querySelectorAll("footer a").forEach(element =>
+      element.addEventListener("click", function(event) {
+        event.preventDefault();
+        const theme = event.target.getAttribute("data-theme");
+        const remove = Array.from(htmlTag.classList).filter(className => className.startsWith("theme-"));
+        remove.forEach(name => htmlTag.classList.remove(name));
+        htmlTag.classList.add("theme-" + theme);
+      })
+    );
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+statement = expression;
+
+expression = e_sum;
+e_sum = value;
+value = literal;
+
+literal = l_number | l_string;
+
+l_string = "NO WAY TO EXPRESS A RANGE LETS GO";
+l_number = { digit };
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
