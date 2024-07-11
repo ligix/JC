@@ -10,6 +10,7 @@ class TokenTypes(enum.Enum):
     NAME = enum.auto()
 
     OP_PLUS = enum.auto()
+    OP_MUL = enum.auto()
 
 
 @dataclasses.dataclass()

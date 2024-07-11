@@ -1,4 +1,5 @@
 from .parser import Lexer
+from pprint import pprint
 import sys
 
 
@@ -7,11 +8,7 @@ def main():
         return print("Usage: python -m jc file.jc")
 
     lexer = Lexer(open(sys.argv[1]).read())
-    while True:
-        try:
-            print(lexer.next_token())
-        except EOFError:
-            break
+    pprint(lexer.tokens())
 
 
 if __name__ == "__main__":

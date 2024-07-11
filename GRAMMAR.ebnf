@@ -1,11 +1,24 @@
 statement ::= expression*
 
 expression ::= e_sum
-e_sum ::= value "+" value
-value ::= literal
 
+e_sum ::= e_mul "+" e_mul
+e_mul ::= expr "*" expr
+
+value ::= literal | identifier
+
+identifier ::= [A-z]*
 literal ::= l_number | l_string
-
 l_string ::= '"' [^"] '"'
 l_number ::= digit*
 digit ::= [0-9]
+
+# TODO: rewrite grammar to not be left recursive
+
+1 + 2 * 2
+3 + 3 + 3
+
+expr
+expr_add
+expr_mul
+literal
