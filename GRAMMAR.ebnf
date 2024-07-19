@@ -1,24 +1,14 @@
-statement ::= expression*
+s_digit ::= [0-9]
+s_lowercase ::= [a-z]
+s_uppercase ::= [A-Z]
+s_letter ::= s_lowercase | s_uppercase
 
-expression ::= e_sum
 
-e_sum ::= e_mul "+" e_mul
-e_mul ::= expr "*" expr
+expression ::= e_add
 
-value ::= literal | identifier
+e_add ::= e_mul "+" e_mul
+e_mul ::= e_literal "*" e_literal
+e_literal ::= l_number | l_string
 
-identifier ::= [A-z]*
-literal ::= l_number | l_string
 l_string ::= '"' [^"] '"'
-l_number ::= digit*
-digit ::= [0-9]
-
-# TODO: rewrite grammar to not be left recursive
-
-1 + 2 * 2
-3 + 3 + 3
-
-expr
-expr_add
-expr_mul
-literal
+l_number ::= '-'? digit*

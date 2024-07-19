@@ -1,4 +1,5 @@
 import dataclasses
+from typing import Any
 import enum
 
 
@@ -16,6 +17,6 @@ class TokenTypes(enum.Enum):
 @dataclasses.dataclass()
 class Token:
     type_: TokenTypes
-    value: object
+    value: Any  # FIXME add correct type hints (ex: if type_ is NUMBER then value MUST be a number)
     line: int = 0
     column: int = 0

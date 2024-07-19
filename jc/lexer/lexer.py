@@ -1,4 +1,4 @@
-from . import Token, TokenTypes
+from .tokens import Token, TokenTypes
 import string
 
 
